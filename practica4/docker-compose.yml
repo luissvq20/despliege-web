@@ -14,8 +14,6 @@ services:
     build:
       context: ./php/
       dockerfile: Dockerfile
-    environment:
-      - APP_ENV= dev
     volumes:
       - ./symfony:/var/www/symfony
     networks:
