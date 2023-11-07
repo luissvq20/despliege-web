@@ -10,4 +10,19 @@ docker-compose up -d
 ```
 __Es importante tener descargado docker y realizar este comando en el interior de la carpeta donde se encuentra docker-compose.yml__
 ### Estructura Symfony
-El primer paso para trabajar en Symfony tras levantar docker
+El primer paso para trabajar en Symfony tras levantar docker es crear el esqueleto del proyecto.
+```
+composer create-project symfony/skeleton .
+```
+### Carpetas del proyecto
+* nginx 
+    - default.conf
+    - Dockerfile 
+    - config.php (Variables constantes sobre la base de datos utilizadas en todos los index)
+* php
+    - Dockerfile
+    *** Dentro de estos elementos existen llamadas a la base de datos para realizar estos movimientos ***
+* symfony
+    - db.php (Clase de la bd con los métodos necesarios para la conexión con nuestra base de datos)
+* .env
+* docker-compose.yml
