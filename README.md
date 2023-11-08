@@ -24,5 +24,5 @@ composer create-project symfony/skeleton .
     *** Dentro de estos elementos existen llamadas a la base de datos para realizar estos movimientos ***
 * symfony
     - db.php (Clase de la bd con los métodos necesarios para la conexión con nuestra base de datos)
-* .env
+* .env(Guardado de las variables de MySQL)
 * docker-compose.yml
