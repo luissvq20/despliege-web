@@ -26,3 +26,6 @@ composer create-project symfony/skeleton .
     - db.php (Clase de la bd con los métodos necesarios para la conexión con nuestra base de datos)
 * .env(Guardado de las variables de MySQL)
 * docker-compose.yml
+```
+ DATABASE_URL="mysql://root:secret@mysql:3306/db_symfony?serverVersion=8"
+```
