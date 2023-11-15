@@ -3,9 +3,11 @@
 // src/Controller/BlogApiController.php
 namespace App\Controller;
 use App\Entity\Estudiante;
+use App\Repository\EstudianteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 // ...
-
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,55 +16,46 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EstudianteController extends AbstractController {
 
+    private $registry;
+    private $em;
+    private $estudianteRepository;
 
-    #[Route('/api/estudiantes/{id}', methods: ['GET'])]
+    public function __construct(EntityManagerInterface $em, ManagerRegistry $registry) {
+        $this->em = $em;
+        $this->registry = $registry;
+        $this->estudianteRepository = new EstudianteRepository($this->registry);
+    }
+  
+
+
+    #[Route('/api/estudiantes/{id}', methods: ['GET','HEAD'])]
     public function findOne(int $id): JsonResponse
     {
-        // ... return a JSON response with the post
-        $estudiante = new Estudiante();
         $response = new JsonResponse();
-        //$response->setContent('<div>Hola mundo</div>');
+        $findOne = $this->estudianteRepository->find($id);
         $response->setData([
            'success' => true,
-           'data' => [
-               [
-                    'id' => $estudiante->getId(),
-                    'nombre' => $estudiante->getNombre(),
-                    'apellido' => $estudiante->getApellido(),
-                    'fecha_nacimiento' => $estudiante->getFechaNacimiento(),
-                    'direccion' => $estudiante->getDireccion(),
-                    'telefono' => $estudiante->getTelefono(),
-                    'codigo_postal' => $estudiante->getCodigoPostal(),
-                    'email' => $estudiante->getEmail()
-
-
-                                   ]
-            ]
+           'data' => $this->estudianteRepository->dataEstudiante($findOne)
         ]);
         return $response;
     }
 
-    #[Route('/api/estudiantes/', methods: ['GET'])]
+    #[Route('/api/estudiantes/', methods: ['GET','HEAD'])]
     public function list(): JsonResponse
     {
         // ... return a JSON response with the post
-        $estudiante = new Estudiante();
         $response = new JsonResponse();
-        //$response->setContent('<div>Hola mundo</div>');
+        $listEstudiantes = $this->estudianteRepository->findAll();
+        $dataEstudiantes = [];
+        
+        foreach ($listEstudiantes as $estudiante) {
+            $dataEstudiantes[] = $this->estudianteRepository->dataEstudiante($estudiante);
+        }
+
+
         $response->setData([
            'success' => true,
-           'data' => [
-               [
-                'id' => $estudiante->getId(),
-                'nombre' => $estudiante->getNombre(),
-                'apellido' => $estudiante->getApellido(),
-                'fecha_nacimiento' => $estudiante->getFechaNacimiento(),
-                'direccion' => $estudiante->getDireccion(),
-                'telefono' => $estudiante->getTelefono(),
-                'codigo_postal' => $estudiante->getCodigoPostal(),
-                'email' => $estudiante->getEmail()
-               ]
-            ]
+           'data' => $dataEstudiantes
         ]);
         return $response;
     }
@@ -135,15 +128,15 @@ class EstudianteController extends AbstractController {
                'data' => null
            ]);	
       }
-      $fecha_nacimiento = new \DateTime("2002-05-29");
+      $fecha_nacimiento = new \DateTime("1988-05-12");
 
-        $estudiante->setNombre("Alvaro");
-        $estudiante->setApellido("Gento");
+        $estudiante->setNombre("Jorge");
+        $estudiante->setApellido("Marimon");
         $estudiante->setFechaNacimiento($fecha_nacimiento);
-        $estudiante->setDireccion("Triana ");
-        $estudiante->setTelefono("77735260");
-        $estudiante->setCodigoPostal("41000");
-        $estudiante->setEmail("alvarogento@gmail.com");
+        $estudiante->setDireccion("Bami");
+        $estudiante->setTelefono("99935260");
+        $estudiante->setCodigoPostal("44444");
+        $estudiante->setEmail("jorgemm@gmail.com");
 
      	$em->persist($estudiante);
      	$em->flush();
@@ -151,18 +144,7 @@ class EstudianteController extends AbstractController {
 
          $response->setData([
             'success' => true,
-            'data' => [
-                [
-                    'id' => $estudiante->getId(),
-                    'nombre' => $estudiante->getNombre(),
-                    'apellido' => $estudiante->getApellido(),
-                    'fecha_nacimiento' => $estudiante->getFechaNacimiento(),
-                    'direccion' => $estudiante->getDireccion(),
-                    'telefono' => $estudiante->getTelefono(),
-                    'codigo_postal' => $estudiante->getCodigoPostal(),
-                    'email' => $estudiante->getEmail()
-                ]
-             ]
+            'data' => $this->estudianteRepository->dataEstudiante($estudiante)
          ]);
          return $response;
     }
@@ -172,28 +154,54 @@ class EstudianteController extends AbstractController {
 
 
     #[Route('/api/estudiantes/{id}', methods: ['PUT'])]
-    public function update(int $id): Response
-    {
-         // ... return a JSON response with the post
-         $estudiante = new Estudiante();
-         $response = new JsonResponse();
-         //$response->setContent('<div>Hola mundo</div>');
-         $response->setData([
+    public function update(int $id, Request $request, EntityManagerInterface $em){
+        // ... return a JSON response with the post
+        $response = new JsonResponse();
+        //$response->setContent('<div>Hola mundo</div>');
+
+        $objEstudiante = $this->estudianteRepository->find($id);
+
+        $fecha_nacimiento = new \DateTime("1988-05-12");
+
+        $objEstudiante->setNombre("Jorge");
+        $objEstudiante->setApellido("Marimon");
+        $objEstudiante->setFechaNacimiento($fecha_nacimiento);
+        $objEstudiante->setDireccion("Bami");
+        $objEstudiante->setTelefono("99935260");
+        $objEstudiante->setCodigoPostal("44444");
+        $objEstudiante->setEmail("jorgemm@gmail.com");
+ 
+        $em->persist($objEstudiante);
+        $em->flush();
+
+        $response->setData([
             'success' => true,
             'data' => [
-                [
-                    'id' => $estudiante->getId(),
-                    'nombre' => $estudiante->getNombre(),
-                    'apellido' => $estudiante->getApellido(),
-                    'fecha_nacimiento' => $estudiante->getFechaNacimiento(),
-                    'direccion' => $estudiante->getDireccion(),
-                    'telefono' => $estudiante->getTelefono(),
-                    'codigo_postal' => $estudiante->getCodigoPostal(),
-                    'email' => $estudiante->getEmail()
-                ]
-             ]
+                $this->estudianteRepository->dataEstudiante($objEstudiante)
+            ]
+        ]);
+        return $response;
+    }
+
+
+
+    #[Route('/api/estudiantes/{id}', methods: ['DELETE'])]
+    public function delete(int $id, Request $request, EntityManagerInterface $em){
+        // ... return a JSON response with the post
+        $response = new JsonResponse();
+        //$response->setContent('<div>Hola mundo</div>');
+
+        $objEstudiante = $this->estudianteRepository->find($id);
+ 
+        $em->remove($objEstudiante);
+        $em->flush();
+
+        $response->setData([
+            'success' => true,
+            'data' => $this->estudianteRepository->dataEstudiante($objEstudiante)
          ]);
          return $response;
+         
     }
 
    

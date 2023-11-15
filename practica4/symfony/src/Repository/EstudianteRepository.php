@@ -21,6 +21,19 @@ class EstudianteRepository extends ServiceEntityRepository
         parent::__construct($registry, Estudiante::class);
     }
 
+    public function dataEstudiante($estudiante) {
+        return [
+            'id' => $estudiante->getId(),
+            'nombre' => $estudiante->getNombre(),
+            'apellido' => $estudiante->getApellido(),
+            'fecha_nacimiento' => $estudiante->getFechaNacimiento(),
+            'direccion' => $estudiante->getDireccion(),
+            'telefono' => $estudiante->getTelefono(),
+            'codigo_postal' => $estudiante->getCodigoPostal(),
+            'email' => $estudiante->getEmail()
+        ];
+    }
+
 //    /**
 //     * @return Estudiante[] Returns an array of Estudiante objects
 //     */
