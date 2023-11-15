@@ -135,15 +135,15 @@ class EstudianteController extends AbstractController {
                'data' => null
            ]);	
       }
+      $fecha_nacimiento = new \DateTime("2002-05-29");
 
-
-        $estudiante->setNombre("Luis");
-        $estudiante->setApellido("Sánchez");
-        $estudiante->setFechaNacimiento("21-08-2000");
-        $estudiante->setDireccion("Santa Elena");
-        $estudiante->setTelefono("64635260");
-        $estudiante->setCodigoPostal("41439");
-        $estudiante->setEmail("sanchezhansluis@gmail.com");
+        $estudiante->setNombre("Alvaro");
+        $estudiante->setApellido("Gento");
+        $estudiante->setFechaNacimiento($fecha_nacimiento);
+        $estudiante->setDireccion("Triana ");
+        $estudiante->setTelefono("77735260");
+        $estudiante->setCodigoPostal("41000");
+        $estudiante->setEmail("alvarogento@gmail.com");
 
      	$em->persist($estudiante);
      	$em->flush();
@@ -154,13 +154,13 @@ class EstudianteController extends AbstractController {
             'data' => [
                 [
                     'id' => $estudiante->getId(),
-                    'nombre' => $nombre->getNombre(),
-                    'apellido' => $apellido->getApellido(),
-                    'fecha_nacimiento' => $fecha_nacimiento->getFechaNacimiento(),
-                    'direccion' => $direccion->getDireccion(),
-                    'telefono' => $telefono->getTelefono(),
-                    'codigo_postal' => $codigo_postal->getCodigoPostal(),
-                    'email' => $email->getEmail()
+                    'nombre' => $estudiante->getNombre(),
+                    'apellido' => $estudiante->getApellido(),
+                    'fecha_nacimiento' => $estudiante->getFechaNacimiento(),
+                    'direccion' => $estudiante->getDireccion(),
+                    'telefono' => $estudiante->getTelefono(),
+                    'codigo_postal' => $estudiante->getCodigoPostal(),
+                    'email' => $estudiante->getEmail()
                 ]
              ]
          ]);
