@@ -21,6 +21,22 @@ class ProfesorRepository extends ServiceEntityRepository
         parent::__construct($registry, Profesor::class);
     }
 
+    public function dataProfesor($profesor) {
+        return [
+            'id' => $profesor->getId(),
+            'nombre' => $profesor->getNombre(),
+            'apellido' => $profesor->getApellido(),
+            'fecha_nacimiento' => $profesor->getFechaNacimiento(),
+            'direccion' => $profesor->getDireccion(),
+            'telefono' => $profesor->getTelefono(),
+            'codigo_postal' => $profesor->getCodigoPostal(),
+            'email' => $profesor->getEmail(),
+            'especialidad' => $profesor->getEspecialidad()
+
+
+        ];
+    }
+
 //    /**
 //     * @return Profesor[] Returns an array of Profesor objects
 //     */

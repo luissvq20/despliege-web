@@ -29,3 +29,29 @@ composer create-project symfony/skeleton .
 ```
  DATABASE_URL="mysql://root:secret@mysql:3306/db_symfony?serverVersion=8"
 ```
+### Creacion de tablas en Symfony
+El primer paso consiste en la creación de tablas, para ello es necesario introducirse en el interior del servicio de php donde se encuentra Symfony e introducir el siguiente código:
+```
+bin/console make:entity "nombre de la tabla"
+```
+A continuación te permitirá rellenar esta tabla, cuando esto acabe será necesario los ficheros migratorios y Symfony nos recomendará realizar los comandos necesarios para ello.
+Nos permite generar los ficheros de migración de la BBDD
+```
+bin/console make:migration
+```
+Ejecuta los ficheros de migración de BBDD y crea tablas, campos etc
+```
+bin/console doctrine:migrations:migrate
+```
+### MOSTRAR, INSERTAR, ACTUALIZAR Y BORRAR REGRISTROS DE LA BASE DE DATOS 
+En el fichero ***EstudianteController.php*** podemos encontrar los metodos para estos procesos:
+* Es necesario declarar un método constructor para poder utilizarse en cada ruta.
+* Funciones de mostrar con la ruta url de método get (en el caso de que le pases un id te mostrará uno solo sino mostrará toda la listas de estudiantes).
+* Funciones de crear mediante la ruta post en la que podemos pasar los parámetros mediante postman para comprobarlo. Para esto debemos pasar el objeto estudiante mediante el Body de postman.
+* Actualizar un registro mediante la ruta con método put junto a un id
+En la clase ***EstudianteRepository.php*** podemos destacar el método que podemos utilizar cada vez que sea necesario mostrar un estudiante.
+    *** Utilizo la tabla estudiante como ejemplo pero esto es aplicable a cualquier tabla ***
+
+
+
+

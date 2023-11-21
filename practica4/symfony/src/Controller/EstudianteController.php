@@ -61,82 +61,31 @@ class EstudianteController extends AbstractController {
     }
 
     #[Route('/api/estudiantes/', methods: ['POST'])]
-    public function createEstudiante(Request $request, EntityManagerInterface $em){
+    public function createEstudiante(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $nombre = $data['nombre'];
+        $apellido = $data['apellido'];
+        $fecha__nacimiento = $data['fecha_nacimiento'];
+        $direccion = $data['direccion'];
+        $telefono = $data['telefono'];
+        $codigo_postal = $data['codigo_postal'];
+        $email = $data['email'];
+
+
         $estudiante = new Estudiante();
         $response = new JsonResponse();
-         //$response->setContent('<div>Hola mundo</div>');
 
-        $nombre = $request->get('nombre', null);
-     	if(empty($nombre)) {
-         	$response->setData([
-             	'success' => true,
-             	'error' => 'Nombre cannot be empty',
-             	'data' => null
-         	]);	
-        }
+     
+      $fecha_nacimiento = new \DateTime($fecha__nacimiento);
 
-        $apellido = $request->get('apellido', null);
-     	if(empty($apellido)) {
-         	$response->setData([
-             	'success' => true,
-             	'error' => 'Apellido cannot be empty',
-             	'data' => null
-         	]);	
-        }
-
-        $fecha_nacimiento = $request->get('fecha_nacimiento', null);
-     	if(empty($fecha_nacimiento)) {
-         	$response->setData([
-             	'success' => true,
-             	'error' => 'Fecha de nacimiento cannot be empty',
-             	'data' => null
-         	]);	
-        }
-
-        $direccion = $request->get('direccion', null);
-     	if(empty($direccion)) {
-         	$response->setData([
-             	'success' => true,
-             	'error' => 'Direccion cannot be empty',
-             	'data' => null
-         	]);	
-        }
-        
-        $telefono = $request->get('telefono', null);
-     	if(empty($telefono)) {
-         	$response->setData([
-             	'success' => true,
-             	'error' => 'Telefono cannot be empty',
-             	'data' => null
-         	]);	
-        }
-
-        $codigo_postal = $request->get('codigo_postal', null);
-        if(empty($codigo_postal)) {
-            $response->setData([
-                'success' => true,
-                'error' => 'Codigo postal cannot be empty',
-                'data' => null
-            ]);	
-       }
-
-       $email = $request->get('email', null);
-       if(empty($email)) {
-           $response->setData([
-               'success' => true,
-               'error' => 'Email cannot be empty',
-               'data' => null
-           ]);	
-      }
-      $fecha_nacimiento = new \DateTime("1988-05-12");
-
-        $estudiante->setNombre("Jorge");
-        $estudiante->setApellido("Marimon");
+        $estudiante->setNombre((String)$nombre);
+        $estudiante->setApellido((String)$apellido);
         $estudiante->setFechaNacimiento($fecha_nacimiento);
-        $estudiante->setDireccion("Bami");
-        $estudiante->setTelefono("99935260");
-        $estudiante->setCodigoPostal("44444");
-        $estudiante->setEmail("jorgemm@gmail.com");
+        $estudiante->setDireccion((String)$direccion);
+        $estudiante->setTelefono((int)$telefono);
+        $estudiante->setCodigoPostal((int)$codigo_postal);
+        $estudiante->setEmail((String)$email);
 
      	$em->persist($estudiante);
      	$em->flush();
@@ -154,22 +103,34 @@ class EstudianteController extends AbstractController {
 
 
     #[Route('/api/estudiantes/{id}', methods: ['PUT'])]
-    public function update(int $id, Request $request, EntityManagerInterface $em){
+    public function update(int $id, Request $request, EntityManagerInterface $em): JsonResponse
+    {
+
+        $data = json_decode($request->getContent(), true);
+        $nombre = $data['nombre'];
+        $apellido = $data['apellido'];
+        $fecha__nacimiento = $data['fecha_nacimiento'];
+        $direccion = $data['direccion'];
+        $telefono = $data['telefono'];
+        $codigo_postal = $data['codigo_postal'];
+        $email = $data['email'];
+
+
         // ... return a JSON response with the post
         $response = new JsonResponse();
         //$response->setContent('<div>Hola mundo</div>');
 
         $objEstudiante = $this->estudianteRepository->find($id);
 
-        $fecha_nacimiento = new \DateTime("1988-05-12");
+        $fecha_nacimiento = new \DateTime($fecha__nacimiento);
 
-        $objEstudiante->setNombre("Jorge");
-        $objEstudiante->setApellido("Marimon");
+        $objEstudiante->setNombre((String)$nombre);
+        $objEstudiante->setApellido((String)$apellido);
         $objEstudiante->setFechaNacimiento($fecha_nacimiento);
-        $objEstudiante->setDireccion("Bami");
-        $objEstudiante->setTelefono("99935260");
-        $objEstudiante->setCodigoPostal("44444");
-        $objEstudiante->setEmail("jorgemm@gmail.com");
+        $objEstudiante->setDireccion((String)$direccion);
+        $objEstudiante->setTelefono((int)$telefono);
+        $objEstudiante->setCodigoPostal((int)$codigo_postal);
+        $objEstudiante->setEmail((String)$email);
  
         $em->persist($objEstudiante);
         $em->flush();
