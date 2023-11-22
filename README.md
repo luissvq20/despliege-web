@@ -50,7 +50,7 @@ En el fichero ***EstudianteController.php*** podemos encontrar los metodos para 
 * Funciones de crear mediante la ruta post en la que podemos pasar los parámetros mediante postman para comprobarlo. Para esto debemos pasar el objeto estudiante mediante el Body de postman.
 * Actualizar un registro mediante la ruta con método put junto a un id
 En la clase ***EstudianteRepository.php*** podemos destacar el método que podemos utilizar cada vez que sea necesario mostrar un estudiante.
-    *** Utilizo la tabla estudiante como ejemplo pero esto es aplicable a cualquier tabla ***
+***Utilizo la tabla estudiante como ejemplo pero esto es aplicable a cualquier tabla***
 
 
 
